@@ -1,0 +1,591 @@
+CREATE TABLE EMPLOYEE(
+	EmployeeID serial PRIMARY KEY,
+	Ename varchar(55) NOT NULL,
+	EAddress varchar(255) NOT NULL,
+	EPhone char(13) NOT NULL,
+	EEmail varchar(255) NOT NULL,
+	EJob_Title varchar(55) NOT NULL,
+	EDOB date NOT NULL,
+	EGender varchar(20) NOT NULL);
+INSERT INTO EMPLOYEE(EmployeeID,Ename,EAddress,EPhone,EEmail,EJob_Title,EDOB,EGender)
+VALUES(0001,'Yan Zhao','123 Adobe St.','(306)333-2743','yanzhao@gmail.com','Dentist','1996-04-25','Male'),
+	(0002,'Shaoshi Zhang','768 Java St.','(647)314-2756','shaoshi22@gmail.com','Nurse','1999-05-23','Male'),
+	(0003,'DD','77 Wall St.','(416)555-3345','dd123@hotmail.com','nurse','1995-07-03','Female'),
+	(0004,'Ken Zhao','667 Mart Ave.','(306)743-0108','KZ666@hotmail.com','Therapist','1994-02-11','Male'),
+	(0005,'Yuki','33 Universty Ave.','(647)218-7763','yukigoodjob@yahoo.com','Doctor','1993-06-05','Female'),
+	(0006,'Xing Chen','571 Wuluwulu St.','(416)781-2345','hasakicx@outlook.com','Doctor','1991-01-17','Male'),
+	(0007,'Jordan Feng','12 Farm St.','(647)334-6590','nicejordan@yahoo.com','Computer Programmer','1992-07-13','Male'),
+	(0008,'Jacky Lin','167 Harvest Ave.','(416)555-4685','ilovejacky@gmail.com','Clerk','1990-11-19','Male'),
+	(0009,'Chris Ting','661 Queen St.','(647)853-9076','christing@hotmail.com','Executive Director','1982-06-18','Female'),
+	(0010,'Zina Wei','176 King St.','(306)703-8923','zinawei@gmail.com','Program Director','1989-12-27','Female');
+
+
+CREATE TABLE POSITION_HISTORY(
+ EmployeeID serial NOT NULL,
+ Job_Title varchar(55) NOT NULL,
+ Job_Start_Date date NOT NULL,
+ Job_End_Date date,
+ Time_Span varchar(10),
+ PRIMARY KEY(EmployeeID,Job_Title),
+ FOREIGN KEY (EmployeeID) REFERENCES EMPLOYEE(EmployeeID));
+
+Insert into Position_history (EMPLOYEEID,
+			      JOB_TITLE,
+			      Job_start_date,
+			      Job_end_date,
+			      Time_Span)
+INSERT INTO POSITION_HISTORY (EMPLOYEEID,
+         JOB_TITLE,
+         Job_Start_Date,
+         Job_End_Date,
+         Time_Span)
+VALUES(0001,'Nurse','2017-08-30','2018-09-20','1Y1M'),
+ (0001,'Nurse assistant', '2017-01-01','2017-07-01','6M'),
+ (0001,'Dentist', '2018-10-01',NULL, NULL),
+ (0002,'Therapist','2016-09-30','2018-05-20','1Y8M'),
+ (0002,'Nurse', '2018-06-01',NULL,NULL),
+ (0003,'Dentist','2017-01-30','2018-05-10','1Y4M'),
+ (0003,'Nurse', '2018-06-02',NULL,NULL),
+ (0004,'Nurse','2014-08-30','2019-09-20','5Y1M'),
+ (0004,'Therapist', '2019-10-01',NULL,NULL),
+ (0005,'Nurse assistant','2017-11-30','2018-12-20','1Y1M'),
+ (0005,'Doctor', '2019-01-01',NULL,NULL),
+ (0006,'Therapist','2017-08-01','2018-09-20','1Y2M'),
+ (0006,'Doctor', '2018-10-01',NULL,NULL),
+ (0007,'Nurse','2017-08-30','2018-09-20','1Y1M'),
+ (0007,'Computer Programmer', '2018-10-01',NULL,NULL),
+ (0008,'receptionist','2017-08-30','2018-09-20','1Y1M'),
+ (0008,'Clerk', '2018-10-01',NULL,NULL),
+ (0009,'receptionist','2017-08-30','2018-09-20','1Y1M'),
+ (0009,'Executive Director', '2018-10-01',NULL,NULL),
+ (0010,'software engineer','2017-08-30','2018-09-20','1Y1M'),
+ (0010,'data analyst','2018-09-21','2018-08-30','1Y'),
+ (0010,'Program Director','2019-09-01',NULL,NULL);
+
+
+
+	
+CREATE TABLE SKILL(
+	EmployeeID serial NOT NULL,
+	Skill_Name varchar(55),
+	PRIMARY KEY(EmployeeID,Skill_Name),
+	FOREIGN KEY (EmployeeID) REFERENCES EMPLOYEE(EmployeeID));
+Insert into SKILL (EmployeeID,
+		    skill_name)
+values (0001, 'Python'),
+       (0002, 'SQL'),
+       (0002, 'web development'),
+       (0003, 'C++'),
+       (0004, 'Java'),
+       (0005, 'C#'),
+       (0006, 'EXCEL'),
+       (0007, 'VBA'),
+       (0008, 'Spark'),
+       (0009, 'Linux'),
+       (0010, 'SQL'),
+       (0010, 'Python');
+	
+CREATE TABLE CREDENTIAL(
+	EmployeeID serial NOT NULL,
+	Cred_Type varchar(55),
+	Cred_Name varchar(55),
+	PRIMARY KEY(EmployeeID,Cred_Name),
+	FOREIGN KEY (EmployeeID) REFERENCES EMPLOYEE(EmployeeID));
+INSERT INTO CREDENTIAL(EmployeeID,Cred_Type,Cred_Name)
+VALUES (0001,'Medical','DDS'),
+	(0002,'Medical','CNA'),
+	(0003,'Medical','CNA'),
+	(0004,'Medical','DDS'),
+	(0004,'Medical','DMD'),
+	(0005,'Medical','CPSO'),
+	(0006,'Medical','CPSO'),
+	(0007,'Non-Medical','MCS'),
+	(0009,'Non-Medical','MBA'),
+	(00010,'Non-Medical','MM');
+
+CREATE TABLE MEDICAL_EMPLOYEE(
+	MEmployeeID serial PRIMARY KEY,
+	Alma_Mater varchar(55) NOT NULL,
+	FOREIGN KEY (MEmployeeID) REFERENCES EMPLOYEE(EmployeeID));
+Insert into Medical_employee (MEmployeeID,
+			      Alma_mater)
+values (0001,'YORK'),
+       (0002, 'UT'),
+       (0003, 'MIT'),
+       (0004, 'UT'),
+       (0005, 'UBC'),
+       (0006, 'Waterloo');
+
+CREATE TABLE SPECIALTY(
+	Medical_Specialty varchar(255),
+	MEmployeeID serial,
+	PRIMARY KEY(MEmployeeID,Medical_Specialty),
+	FOREIGN KEY (MEmployeeID) REFERENCES MEDICAL_EMPLOYEE(MEmployeeID));
+insert into specialty(Medical_specialty,
+		      MEmployeeID)
+values ('immunology',0001),
+	('Anesthesiology',0002),
+	('Emergency',0003),
+	('Dermatology',0004),
+	('Anesthesiology',0005),
+	('Dermatology',0006);
+	
+CREATE TABLE NON_MEDICAL_EMPLOYEE(
+	NEmployeeID serial PRIMARY KEY,
+	Department varchar(55) NOT NULL,
+	FOREIGN KEY (NEmployeeID) REFERENCES EMPLOYEE(EmployeeID));
+INSERT INTO NON_MEDICAL_EMPLOYEE(NEmployeeID,Department)
+VALUES (0007,'IT'),
+	(0008,'General Affair'),
+	(0009,'Executive'),
+	(00010,'Program Management');
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE APPOINTMENT(
+	AppID serial PRIMARY KEY,
+	PatientID serial,
+	MEmployeeID serial,
+	Sched_Time time,
+	Sched_Date date,
+	Act_Time time,
+	Act_Date date,
+	Med_Note varchar(500),
+	Diagnosis varchar(500),
+	Treatment varchar(500),
+	FOREIGN KEY (PatientID) REFERENCES PATIENT(PatientID),
+	FOREIGN KEY (MEmployeeID) REFERENCES MEDICAL_EMPLOYEE (MEmployeeID));
+
+
+INSERT INTO APPOINTMENT(AppID,
+			PatientID,
+			MEmployeeID,
+			Sched_Time,
+			Sched_Date,
+			Act_Time,
+			Act_Date,
+			Med_Note,
+			Diagnosis,
+			Treatment)
+VALUES  (0002,0002,0003,'10:30:00','2017-05-19', '10:25:30','2017-05-19','tooth pain for weeks','wisdom tooth','tooth extraction'),
+	(0003,0002,0003,'09:30:00','2017-05-23', '09:25:00','2017-05-23','scheduled tooth extraction', 'wisdom tooth', 'have some ice cream'),
+	(0007,0006,0005,'15:00:00','2019-06-01', '14:55:00', '2019-06-01','cough since last week', 'fever','have some cold coke'),
+	(0001,0001,0002,'17:00:00','2017-02-13', '17:05:00', '2017-02-13','headache','too much pressure','massage'),
+	(0004,0003,0001,'12:00:00','2017-09-01', '11:59:30', '2017-09-01','annual body check',NULL,NULL),
+	(0006,0005,0006,'11:00:00','2018-10-15', '11:10:00', '2018-10-15','stomachache','eat too much','pepto'),
+	(0008,0007,0004,'08:30:00','2019-10-02', '08:25:00', '2019-10-02','back pain', 'sit too long','massage'),
+	(0005,0004,0003,'06:30:00','2017-12-31', NULL,NULL,NULL,NULL,NULL);
+
+
+
+
+
+CREATE TABLE PATIENT(
+	PatientID serial PRIMARY KEY,
+	PName varchar(55) NOT NULL,
+	PAddress varchar(255) NOT NULL,
+	PPhone char(13) NOT NULL,
+	PEmail varchar(255) NOT NULL,
+	PDOB date NOT NULL,
+	PGender varchar(20) NOT NULL,
+	OHIP char(12),
+	Next_of_Kin varchar(255));
+
+INSERT INTO PATIENT(
+		    PatientID,
+	 	    PName,
+		    PAddress,
+	            PPhone,
+	            PEmail,
+	            PDOB,
+	            PGender,
+	            OHIP,
+	            Next_of_Kin)
+VALUES  (0001,'Joe Smith','112 Jane Street','(514)456-7899','joesmith@gmail.com','1988-03-04','Male','AB1111111111', 'Tom Smith'),
+	(0002,'Christopher Robbin','151 Dan Leckie way','(255)452-2225','christopherrobbin@gmail.com','1970-12-13','Male','CD2222222222','Winnie the Pooh'),
+	(0003,'Amy Brown','75 Queens Wharf Rd','(416)562-5634','amybrown@outlook.com','1999-06-01','Female','EF3333333333','Ricard Brown'),
+	(0004,'Michael Williams','15 Iceboat Drive','(647)559-8855','michaelwilliams@gmail.com','2000-05-06','Male','GH4444444444','May Williams'),
+	(0005,'Jack Davis','117 Fort York Blvd','(456)876-1234','jackdavis@hotmail.com','2001-09-16','Male','JK5555555555','Jacky Davis'),
+	(0006,'Emily Wilson','10001 Yonge Street','(965)563-1234','emilywilson@gmail.com','1995-03-19','Female','ZS6666666666','Martin Wilson'),
+	(0007,'Alice Thomas','1001 Bay Street','(564)123-7895','alicethomas@hotmail.com','1977-07-08','Female','RT7777777777','Tony Thomas');
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE PATIENT_DETAIL(
+	PatientID serial PRIMARY KEY,
+	Med_Detail varchar(500),
+	Fam_Doc_Name varchar(55),
+	Fam_Doc_Contact varchar(255),
+	Allergy varchar(500),
+	FOREIGN KEY (PatientID) REFERENCES PATIENT (PatientID));
+
+
+
+INSERT INTO PATIENT_DETAIL(
+			   PatientID,
+			   Med_Detail,
+			   Fam_Doc_Name,
+			   Fam_Doc_Contact,
+			   Allergy)
+VALUES  (0001,'frequent headache and frequent pain relief drags','Batman','batman@gmail.com',NULL),
+	(0002,'wisdom tooth, tooth extraction scheduled on 2017-05-23','Spiderman','Spiderman@gmail.com','Peanut'),
+	(0003,'Annual body check', NULL,NULL,NULL),
+	(0004,NULL,NULL,NULL,NULL),
+	(0005,'frequent stomachache due to irregular diet','Superman','superman@gmail.com',NULL),
+	(0006,'fever on 2019-06-01, no medicine provided','Robin','robin@gmail.com',NULL),
+	(0007,'back pain, massage scheduled on 2019-10-02','Tony Stack','tonystack@gmail.com',NULL);
+
+
+
+
+
+CREATE TABLE COMPLAINT(
+	ComplaintID serial PRIMARY KEY,
+	Comp_Name varchar(255) NOT NULL,
+	Comp_Start_Date date NOT NULL,
+	Comp_End_Date date);
+
+INSERT INTO COMPLAINT(ComplaintID,
+        	      Comp_Name,
+                      Comp_Start_Date,
+                      Comp_End_Date)
+VALUES (0001, 'Headache','2017-02-13', NULL),
+       (0002, 'Toothache','2017-05-19','2017-05-23'),
+       (0003, 'Annual Health Check','2017-09-01','2017-09-01'),
+       (0004, 'Stomachache','2018-10-15', NULL),
+       (0005, 'Fever','2019-06-01', NULL),
+       (0006, 'Slipped Discs', '2019-10-02', NULL);
+
+
+	
+
+
+
+
+CREATE TABLE VISIT_RECORD(
+	AppID serial,
+	ComplaintID serial,
+	ProductID int,
+	Usage float,
+	FOREIGN KEY (AppID) REFERENCES APPOINTMENT (AppID),
+	FOREIGN KEY (ComplaintID) REFERENCES COMPLAINT (ComplaintID));
+
+INSERT INTO VISIT_RECORD(APPID,
+    			 ComplaintID,
+    			 ProductID,
+    			 Usage)
+
+
+VALUES  (0001, 0001, 0006, 1),             
+        (0001, 0001, 0007, 1),            
+        (0002, 0002, 0002, 3),             
+ 	(0002, 0002, 0006,2 ),     
+ 	(0002, 0002, 0003,2),             
+ 	(0003, 0002, 0005,10 ),         
+ 	(0003, 0002, 0004,10),        
+        (0004, 0003, NULL, NULL),                        
+        (0006, 0004, 0001, 1),            
+        (0006, 0004, 0006, 1),         
+        (0007, 0005, 0001, 1),            
+        (0007, 0005, 0005, 3),            
+        (0007, 0005, 0007, 1),
+	(0008, 0006, 0006, 1);
+
+
+
+
+
+
+CREATE TABLE INSURANCE(
+	PolicyNum varchar(25) PRIMARY KEY,
+	PatientID serial,
+	Provider_Name varchar(55) NOT NULL,
+	Provider_Phone char(13) NOT NULL,
+	Provider_Email varchar(255) NOT NULL,
+	Provider_EDI varchar(512),
+	FOREIGN KEY (PatientID) REFERENCES PATIENT (PatientID));
+
+
+INSERT INTO INSURANCE(
+	PolicyNum,
+	PatientID,
+	Provider_Name,
+	Provider_Phone,
+	Provider_Email,
+	Provider_EDI)
+VALUES  (100, 1, 'SUNLIFE', '(877)786-5433', 'service@sunlife.ca', 'http://www.sunlife.ca/slfdirect'),
+	(101, 2, 'SUNLIFE', '(877)786-5433', 'service@sunlife.ca', 'http://www.sunlife.ca/slfdirect'),
+	(102, 3, 'SUNLIFE', '(877)786-5433', 'service@sunlife.ca', 'http://www.sunlife.ca/slfdirect'),
+	(103, 4, 'MANULIFE', '(800)268‑6195', 'service@manulife.ca', 'https://www.manulife.ca/personal/support/contact-us.html'),
+	(104, 5, 'MANULIFE', '(800)268‑6195', 'service@manulife.ca', 'https://www.manulife.ca/personal/support/contact-us.html'),
+	(105, 6, 'SUNLIFE', '(877)786-5433', 'service@sunlife.ca', 'http://www.sunlife.ca/slfdirect'),
+	(106, 7, 'SUNLIFE', '(877)786-5433', 'service@sunlife.ca', 'http://www.sunlife.ca/slfdirect');
+
+
+
+
+
+
+CREATE TABLE INSURANCE_CLAIM(
+	ClaimID varchar(25) PRIMARY KEY,
+	ComplaintID serial,
+	PolicyNum varchar(25),
+	Proced_Name varchar(500),
+	Insur_Code varchar(25),
+	Insur_Partner varchar(55) NOT NULL,
+	Date_Submitted date NOT NULL,
+	Amount_Submitted float,
+	Amount_Covered float,
+	FOREIGN KEY (ComplaintID) REFERENCES COMPLAINT (ComplaintID),
+	FOREIGN KEY (PolicyNum) REFERENCES INSURANCE (PolicyNum));
+
+
+
+INSERT INTO INSURANCE_CLAIM(
+	ClaimID,
+	ComplaintID,
+	PolicyNum,
+	Proced_Name,
+	Insur_Code,
+	Insur_Partner,
+	Date_Submitted,
+	Amount_Submitted,
+	Amount_Covered)
+VALUES  (100, 0001, 100, 'FEVER CHECK', 001, 'SUNLIFE', '2017-02-13', 200, 200),
+	(101, 0002, 101, 'TOOTH CHECKUP', 001, 'SUNLIFE', '2017-05-19', 200, 200),
+	(102, 0003, 102, 'HEALTH CHECK', 001, 'SUNLIFE', '2017-05-19', 200, 200),
+	(104, 0004, 104, 'STOMACH CHECKUP', 002, 'MANULIFE', '2018-10-15', 100, 100),
+	(105, 0005, 105, 'FEVER CHECK', 001, 'SUNLIFE', '2017-02-13', 200, 200),
+	(106, 0006, 106, 'MASSAGE', 001, 'SUNLIFE', '2017-02-13', 200, 200);
+
+
+
+
+
+
+
+
+CREATE TABLE VENDOR(
+VendorID    serial    PRIMARY KEY,
+VName    varchar(100)  NOT NULL,
+VAddress varchar(100)  NOT NULL,
+VPhone   char(13)      NOT NULL,
+VEmail   varchar(255)  NOT NULL,
+VContact_Name varchar(55) NOT NULL);
+
+INSERT INTO VENDOR(VName,
+                   VAddress,
+                   VPhone,
+                   VEmail,
+                   VContact_Name)
+VALUES   ('MMAI', '8 HILLCREST AVE', '(647)952-9016', 'mmai20@gmail.com', 'David Johnson'),
+         ('MACC', '25 Bestnut Cr', '(617)789-8090', 'macc23@gmail.com', 'Johnson Lou'),
+         ('MFin', '77 Allston St', '(647)769-7171', 'mfin98@gmail.com', 'Zuoling Wang'),
+('MBA', '15 University Rd', '(416)529-7070', 'mba2020@gmail.com', 'Leo Gong'),
+('IMBA', '99 Sunrays Ave', '(647)134-7655', 'mba1998@gmail.com', 'Kiki Zhao'),
+('MMGT', '35 Silverwing Blv', '(315)246-2517', 'mmgt1980@hotmail.com', 'Lisa Lee'),
+('MBAN', '1 Leighton St', '(647)899-7711', 'mban998@gmail.com', 'Christina Besty'),
+('MKT', '24 Dundas St', '(431)255-8082', 'mkt1024@hotmail.com', 'Crystal Lin')
+;
+
+
+
+CREATE TABLE PRODUCT (
+ProductID       serial      PRIMARY KEY,
+ProdName        varchar(55) NOT NULL,
+VendorID        serial      NOT NULL,
+Inventory       decimal(6,0) NOT NULL,
+ProdType        decimal(1,0) NOT NULL,
+FOREIGN KEY (VendorID) REFERENCES VENDOR (VendorID)
+);
+
+INSERT INTO PRODUCT (ProdName,
+                     VendorID,
+                     Inventory,
+                     ProdType)
+VALUES ('N-95 Mask', 1, 100000, 0),
+       ('Cotton swab', 2, 80000, 0),
+       ('Rubbing Alcohol', 3, 987,0),
+       ('Needle tube', 4,100000,0),
+       ('Anti-inflammatory drugs', 6, 8, 1),
+       ('Painkillers', 5, 20, 1),
+       ('Aspirin', 8, 19,1),
+       ('Medical gauze', 7, 2000, 0);
+
+
+
+
+CREATE TABLE NEWORDER (
+OrderID     serial     PRIMARY KEY,
+OrderDate   date       NOT NULL); 
+
+INSERT INTO NEWORDER(OrderDate)
+VALUES ('2018-10-16'),
+('2016-12-11'),
+('2016-01-22'),
+('2017-01-03'),
+('2015-12-20'),
+('2015-10-28'),
+('2016-06-15'),
+('2019-10-14');
+
+CREATE TABLE ORDER_LINE (
+OrderID    serial,
+ProductID  serial,
+PQuantity  int NOT NULL,
+PRIMARY KEY (OrderID, ProductID),
+FOREIGN KEY (OrderID) REFERENCES NEWORDER (OrderID),
+FOREIGN KEY (ProductID) REFERENCES PRODUCT (ProductID) 
+);
+
+INSERT INTO ORDER_LINE(OrderID,
+                      ProductID,
+                      PQuantity)
+VALUES (1, 5, 10),
+(2, 4, 10000),
+(3, 8, 100),
+(4, 2, 5000),
+(5, 3, 100),
+(6, 1, 10000),
+(7, 6, 10),
+(8, 7, 10);
+
+
+
+
+
+
+
+
+SELECT EMPLOYEE.EmployeeID, Ename, Job_Title
+FROM EMPLOYEE, POSITION_HISTORY
+WHERE POSITION_HISTORY.EmployeeID = EMPLOYEE.EmployeeID
+ORDER BY EMPLOYEE.EmployeeID;
+
+
+select * from APPOINTMENT
+where MEmployeeID = (select EmployeeID from Employee where Ename = 'DD')
+and act_date > '2017-05-18' 
+and act_date <= '2017-05-25';
+
+
+SELECT PATIENT.PName, PATIENT.PatientID, INSURANCE_CLAIM.Amount_submitted, INSURANCE_CLAIM.Amount_Covered
+FROM INSURANCE_CLAIM, COMPLAINT, VISIT_RECORD, APPOINTMENT, PATIENT
+WHERE INSURANCE_CLAIM.ComplaintID = COMPLAINT.ComplaintID
+AND COMPLAINT.ComplaintID = VISIT_RECORD.ComplaintID
+AND Visit_RECORD.AppID = APPOINTMENT.AppID
+AND APPOINTMENT.PatientID = PATIENT.PatientID
+AND PATIENT.PName = 'Amy Brown';
+
+
+
+
+
+
+SELECT DISTINCT VISIT_RECORD.ComplaintID, Comp_Name,PRODUCT.ProductID,ProdName,Prodtype
+FROM VISIT_RECORD, COMPLAINT, PRODUCT
+WHERE VISIT_RECORD.ComplaintID = COMPLAINT.ComplaintID
+AND COMPLAINT.ComplaintID = 5
+AND VISIT_RECORD.ProductID = PRODUCT.ProductID
+AND PRODUCT.ProdType = 0;
+
+
+SELECT DISTINCT VISIT_RECORD.ComplaintID, Comp_Name,PRODUCT.ProductID,ProdName,Prodtype
+FROM VISIT_RECORD, COMPLAINT, PRODUCT
+WHERE VISIT_RECORD.ComplaintID = COMPLAINT.ComplaintID
+AND COMPLAINT.ComplaintID = 5
+AND VISIT_RECORD.ProductID = PRODUCT.ProductID
+AND PRODUCT.ProdType = 1;
+
+
+
+
+
+ALTER TABLE Product ADD Order_amount float;
+
+UPDATE Product
+SET Order_amount = greatest(0,(100000 - Inventory))
+WHERE ProductID = 1
+;
+
+UPDATE Product
+SET Order_amount = greatest(0,(100000 - Inventory))
+WHERE ProductID = 2
+;
+
+UPDATE Product
+SET Order_amount = greatest(0,(1000 - Inventory))
+WHERE ProductID = 3
+;
+
+UPDATE Product
+SET Order_amount = greatest(0,(100000 - Inventory))
+WHERE ProductID = 4
+;
+
+UPDATE Product
+SET Order_amount = greatest(0,(20 - Inventory))
+WHERE ProductID = 5
+;
+
+UPDATE Product
+SET Order_amount = greatest(0,(20 - Inventory))
+WHERE ProductID = 6
+;
+
+UPDATE Product
+SET Order_amount = greatest(0,(20 - Inventory))
+WHERE ProductID = 7
+;
+
+UPDATE Product
+SET Order_amount = greatest(0,(2000 - Inventory))
+WHERE ProductID = 8;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
